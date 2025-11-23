@@ -1,4 +1,4 @@
-package com.pedro.api_teste.resource.model;
+package com.pedro.api_teste.model.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
