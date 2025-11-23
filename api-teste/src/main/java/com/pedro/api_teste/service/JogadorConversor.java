@@ -1,8 +1,8 @@
 package com.pedro.api_teste.service;
 
-import com.pedro.api_teste.datasource.model.Jogador;
+import com.pedro.api_teste.model.datasource.Jogador;
 import com.pedro.api_teste.exception.JogadorResourceException;
-import com.pedro.api_teste.resource.model.JogadorResource;
+import com.pedro.api_teste.model.request.JogadorResource;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -14,15 +14,15 @@ public class JogadorConversor {
             throws JogadorResourceException {
 
                 try {
-                    Jogador jogador = new Jogador();
-
                     LocalDate idade = checkIdade(jogadorResource.getIdade());
-                    jogador.setIdade(idade);
-                    jogador.setNome(jogadorResource.getNome());
-                    jogador.setTime(jogadorResource.getTime());
-                    jogador.setPosicao(jogadorResource.getPosicao());
 
-                    return jogador;
+                    return Jogador.builder()
+                                    .idade(idade)
+                                    .nome(jogadorResource.getNome())
+                                    .time(jogadorResource.getTime())
+                                    .posicao(jogadorResource.getPosicao())
+                                    .build();
+
                 }catch (Exception e){
                     throw new JogadorResourceException(
                             "Falha ao converter o resource para entidade, resource: "
@@ -36,4 +36,6 @@ public class JogadorConversor {
     private LocalDate checkIdade(String idade){
         return LocalDate.parse(idade);
     }
+
+
 }
