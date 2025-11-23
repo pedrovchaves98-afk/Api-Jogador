@@ -15,6 +15,7 @@ public class JogadorService {
     private final JogadorRepository jogadorRepository;
     private final JogadorConversor service;
     //andrey mudou
+    //andrey mudou denovo
 
     public List<Jogador> buscarTodosJogadores(){
         return jogadorRepository.findAll();
