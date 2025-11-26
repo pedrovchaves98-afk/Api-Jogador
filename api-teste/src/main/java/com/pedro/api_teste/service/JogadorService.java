@@ -6,7 +6,10 @@ import com.pedro.api_teste.exception.JogadorResourceException;
 import com.pedro.api_teste.repository.JogadorRepository;
 import com.pedro.api_teste.model.request.JogadorResource;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,8 +17,6 @@ import java.util.Optional;
 public class JogadorService {
     private final JogadorRepository jogadorRepository;
     private final JogadorConversor service;
-    //andrey mudou
-    //andrey mudou denovo
 
     public List<Jogador> buscarTodosJogadores(){
         return jogadorRepository.findAll();
@@ -49,5 +50,23 @@ public class JogadorService {
             throw new RuntimeException("Erro ao cadastrar jogador: " + e.getMessage());
         }
 
+    }
+    public Jogador updateJogador(@RequestBody JogadorResource jogadorResource, @PathVariable(name = "id", required = true) Long id ) throws JogadorNotFoundException {
+                Jogador jogadorUp = buscarPorid(id);
+
+                if (jogadorResource.getNome() != null) {
+                    jogadorUp.setNome(jogadorResource.getNome());
+                }
+                if (jogadorResource.getIdade() != null) {
+                    jogadorUp.setIdade(LocalDate.parse(jogadorResource.getIdade()));
+                }
+                if (jogadorResource.getPosicao() != null) {
+                    jogadorUp.setPosicao(jogadorResource.getPosicao());
+                }
+                if (jogadorResource.getTime() != null) {
+                    jogadorUp.setTime(jogadorResource.getTime());
+                }
+
+        return jogadorRepository.saveAndFlush(jogadorUp);
     }
 }
